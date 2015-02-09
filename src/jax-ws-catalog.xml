@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/tbuczko/NetBeansProjects/jackrabbit-poc/src/main/resources/JupiterService.wsdl" uri="wsdl/JupiterService.wsdl"/>
+    <system systemId="file:/home/tbuczko/NetBeansProjects/jackrabbit-poc/src/main/resources/JupiterService1.xsd" uri="wsdl/JupiterService1.xsd"/>
+    <system systemId="file:/home/tbuczko/NetBeansProjects/jackrabbit-poc/src/main/resources/JupiterService2.xsd" uri="wsdl/JupiterService2.xsd"/>
+</catalog>
