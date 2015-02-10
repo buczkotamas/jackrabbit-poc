@@ -15,8 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.jackrabbit.commons.JcrUtils;
 
 /**
  *
@@ -25,12 +27,12 @@ import org.apache.commons.net.ftp.FTPFile;
 public class FTPParser {
 
     FTPClient client;
-    RigoImre rigoImre;
+    Session session;
     String jcrServerNodePath;
     private static Logger logger = Logger.getLogger(JCRForm.class.getName());
 
-    public FTPParser(String host, int port, String user, String pass, String root, RigoImre rigoImre) {
-        this.rigoImre = rigoImre;
+    public FTPParser(String host, int port, String user, String pass, String root, Session session) {
+        this.session = session;
         jcrServerNodePath = "/downloadservers/" + host;
         try {
             client = new FTPClient();
@@ -38,14 +40,14 @@ public class FTPParser {
             client.connect(host, port);
             client.login(user, pass);
             parse(root);
-            rigoImre.getSession().save();
+           session.save();
         } catch (Exception ex) {
             logger.log(Level.SEVERE, null, ex);
         }
     }
 
     private void parse(String workingDirectory) throws RepositoryException, IOException, Exception {
-        Node node = rigoImre.getNode(jcrServerNodePath + workingDirectory);
+        Node node = JcrUtils.getOrCreateByPath(jcrServerNodePath + workingDirectory, null,session);
         String encoded = new String(workingDirectory.getBytes("UTF-8"), "ISO-8859-1");
         FTPFile[] files = client.listFiles(encoded);
         logger.log(Level.INFO, "Parse {0} item in directory: {1}", new Object[]{files.length, workingDirectory});
@@ -67,7 +69,7 @@ public class FTPParser {
 
     private void parseFile(String remote, long size) throws IOException, RepositoryException, NoSuchAlgorithmException {
         InputStream is = getInputStream(remote);
-        Node node = rigoImre.getNode(jcrServerNodePath + remote);
+        Node node = JcrUtils.getOrCreateByPath(jcrServerNodePath + remote, null,session);
         node.setProperty("first64Checksum", Utils.getFirst64KBChecksum(is));
         node.setProperty("size", size);
         is.close();
@@ -120,7 +122,7 @@ public class FTPParser {
         } else {
             nodeName = nodeName.substring(0, nodeName.lastIndexOf("."));
         }
-        rigoImre.getNode(nodeName).setProperty("md5Checksum", new String(buffer));
+        JcrUtils.getOrCreateByPath(nodeName, null, session).setProperty("md5Checksum", new String(buffer));
     }
 
     private InputStream getInputStream(String remote) {
