@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/home/tbuczko/NetBeansProjects/jackrabbit-poc/src/main/resources/JupiterService" uri="wsdl/JupiterService.wsdl"/>
-    <system systemId="file:/home/tbuczko/NetBeansProjects/jackrabbit-poc/src/main/resources/JupiterService.xsd1" uri="wsdl/JupiterService.xsd1.xsd"/>
-    <system systemId="file:/home/tbuczko/NetBeansProjects/jackrabbit-poc/src/main/resources/JupiterService.xsd2" uri="wsdl/JupiterService.xsd2.xsd"/>
-    <system systemId="http://www.jaguar.dev.naviextras.com:80/Jupiter/JupiterService?xsd=1" uri="wsdl/www.jaguar.dev.naviextras.com_80/Jupiter/JupiterService.xsd_1.xsd"/>
-</catalog>
